@@ -1,0 +1,55 @@
+import pdb
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
+
+
+def pieChart():
+    # pdb.set_trace()
+    data = pd.read_csv(os.getcwd() + "\\Air_polution.csv")
+    #Only UK Data because of large data
+    UK_Data = data[data['Location'].str.contains("United Kingdom of Great Britain and Northern Ireland")]
+    plt.title("Issues from Air pollution in United Kingdom in 2019")
+    total = UK_Data['Dim2'].value_counts().values.sum()
+    #Formating and percentage calculation
+
+    def formatting(var1):
+        return '{:.1f}%\n{:.0f}'.format(var1, total * var1 / 100)
+    #making Piechart
+    plt.pie(UK_Data['Dim2'].value_counts().values, labels=UK_Data['Dim2'].value_counts().index, autopct=formatting)
+    # plt.plot(x, y)
+    plt.show()
+def barChart():
+    # pdb.set_trace()
+    data = pd.read_csv(os.getcwd() + "\\Air_polution.csv")
+    x = data['ParentLocation']
+    # On Y axis will be the Actual figures
+    y = data['Dim2']
+    # pdb.set_trace()
+    # plt.bar(West_pacific['Dim2'].value_counts().values, labels=West_pacific['Dim2'].value_counts().index)
+    plt.title("Diseases caused by Air pollution in 2019")
+    plt.xlabel("Continents")
+    plt.ylabel("Diseases")
+    plt.bar(x, y)
+    plt.xticks(rotation=45)
+    plt.show()
+
+
+def gridChart():
+    # pdb.set_trace()
+    data = pd.read_csv(os.getcwd() + "\\generic_ballot_polls.csv")
+    # pdb.set_trace()
+    #setting x and y axis
+    y= data['display_name']
+    x=data['sample_size']
+    # pdb.set_trace()
+    plt.title("Balloting polls in different college")
+    plt.xlabel("Sample size")
+    plt.ylabel("College names")
+    plt.plot(x, y)
+    plt.grid()
+    plt.show()
+
+pieChart()
+barChart()
+gridChart()
